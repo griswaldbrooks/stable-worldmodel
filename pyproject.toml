@@ -63,6 +63,15 @@ format = [
     "imageio[ffmpeg]",
 ]
 
+# Genesis simulator stack (SO-101 env). Heavy, so opt-in:
+# `uv sync --extra genesis`. Nyx renderer needs an NVIDIA GPU with
+# CUDA 12.9+ / driver 575+; alpha 0.1.x wheels, so cap the minor.
+genesis = [
+    "genesis-world>=1.0.0,<2",
+    "gs-nyx>=0.1.1,<0.2",
+    "gs-nyx-plugin>=0.1.2,<0.2",
+]
+
 lerobot = [
     "lerobot>=0.5.0; python_version >= '3.12'",
 ]
@@ -98,6 +107,15 @@ source-exclude = [
     "**/__pycache__/**",
     "**/*.pyc",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "gpu: requires a CUDA GPU (deselected by default; run with -m gpu)",
+    "genesis: requires the Genesis simulator stack (deselected by default; run with -m genesis after `uv sync --extra genesis`)",
+]
+# Skip gpu + genesis by default so CI and quick runs stay lean. A -m on
+# the command line overrides this (later -m wins).
+addopts = "-m 'not gpu and not genesis'"
 
 [tool.ruff]
 line-length = 79

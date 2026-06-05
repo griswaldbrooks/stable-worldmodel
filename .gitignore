@@ -222,6 +222,7 @@ results/
 wandb/
 videos/
 dataset/
+scripts/examples/data/
 *.out
 *.mp4
 lightning_logs/

@@ -51,6 +51,15 @@ register(
     entry_point='stable_worldmodel.envs.ogbench.maze_env:MazeEnv',
 )
 
+# Genesis-simulated SO-101 arm; needs the `genesis` extra. The time
+# limit (8 s at 25 Hz) truncates failed grasps so rollout loops finish;
+# the scripted oracle lifts in ~4 s.
+register(
+    id='swm/SO101PickCube-v0',
+    entry_point='stable_worldmodel.envs.so101.env:SO101PickCube',
+    max_episode_steps=200,
+)
+
 register(
     id='swm/PFRocketLanding-v0',
     entry_point='stable_worldmodel.envs.rocket_landing.pyflyt_rocketlanding:RocketLandingEnv',
